@@ -1,0 +1,64 @@
+﻿@model BlogWebApp.Models.Post
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>
+    @Html.DisplayFor(model => model.UserName)
+</h2>
+<h1>
+    <b>@Html.DisplayFor(model => model.Title)</b>
+</h1>
+
+<div>
+    <div>
+        <a>
+            @Html.DisplayFor(model => model.Date)
+        </a>
+    </div>
+
+    @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.UserName)
+    {
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+        </div>
+    }
+
+    <h4>
+        @Html.DisplayFor(model => model.Content)
+    </h4>
+
+    <hr />
+    <dl class="row">
+        <dd class="col-sm-10">
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="AddComment" asp-route-id="@Model.Id">Add comment</a>
+</div>
+
+@foreach (var comment in Model.Comments)
+{
+    <div class="box-shadow" style="margin: 4px">
+        <h4>
+            @comment.UserName
+        </h4>
+        <a>
+            @comment.Date
+        </a>
+        <h5>
+            @comment.Content
+        </h5>
+        <dl class="row">
+            <dd class="col-sm-10">
+            </dd>
+        </dl>
+    </div>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
